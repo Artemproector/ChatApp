@@ -138,7 +138,7 @@
     let win = document.querySelector('.window');
     async function getJsonValue(path = '') {
         try {
-            const response = await fetch('static/memory.json');
+            const response = await fetch('chatapp.pythonanywhere.com/static/memory.json');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -234,7 +234,7 @@
         }
 
         try {
-            const response = await fetch('/api/create_user', {
+            const response = await fetch('chatapp.pythonanywhere.com/api/create_user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -263,5 +263,6 @@
         }
     }
 </script>
+
 
 </html>
