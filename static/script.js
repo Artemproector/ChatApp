@@ -66,7 +66,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
 // Функция для получения JSON данных напрямую (для обратной совместимости)
 async function getJsonValue(path = '') {
     try {
-        const response = await fetch('https://chatapp.pythonanywhere.com/static/memory.json');
+        const response = await fetch('static/memory.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -119,7 +119,7 @@ async function sendMessage(event) {
     }
 
     try {
-        const result = await apiRequest('https://chatapp.pythonanywhere.com/api/send_message', 'POST', {
+        const result = await apiRequest('/api/send_message', 'POST', {
             chat_id: currentChatId,
             user_id: userID,
             text: messageText
@@ -423,7 +423,7 @@ async function handleCreateChat(event) {
     const chatId = generateChatId();
 
     try {
-        const result = await apiRequest('https://chatapp.pythonanywhere.com/create_chat', 'POST', {
+        const result = await apiRequest('create_chat', 'POST', {
             chat_id: chatId,
             chat_name: chatName,
             users: selectedUsers,
@@ -488,7 +488,7 @@ console.log("Загрузка функций завершена");
 // Загрузка чатов пользователя
 async function loadUserChats() {
     try {
-        const result = await apiRequest(`https://chatapp.pythonanywhere.com/api/get_chats?user_id=${userID}`);
+        const result = await apiRequest(`/api/get_chats?user_id=${userID}`);
 
         if (result.success) {
             displayChats(result.chats);
@@ -527,7 +527,7 @@ function displayChats(chats) {
         chatElement.innerHTML = `
             <div class="chat-info">
                 <p class="name">${escapeHtml(chat.name)}</p>
-                <p class="id">USER:${((await apiRequest(`https://chatapp.pythonanywhere.com/api/get_messages/${chat.id}`)).messages?.at(-1)?.text || '').substring(0, 50) + (((await apiRequest(`/api/get_messages/${chat.id}`)).messages?.at(-1)?.text || '').length > 50 ? '...' : '')}</p>
+                <p class="id">USER:${((await apiRequest(`api/get_messages/${chat.id}`)).messages?.at(-1)?.text || '').substring(0, 50) + (((await apiRequest(`/api/get_messages/${chat.id}`)).messages?.at(-1)?.text || '').length > 50 ? '...' : '')}</p>
             </div>
         `;
         chatListContainer.appendChild(chatElement);
@@ -719,7 +719,7 @@ async function loadChatMessages(id, showLoading = true) {
     }
 
     try {
-        const result = await apiRequest(`https://chatapp.pythonanywhere.com/api/get_messages/${id}`);
+        const result = await apiRequest(`/api/get_messages/${id}`);
 
         if (!result.success) {
             throw new Error(result.error || 'Не удалось получить сообщения');
@@ -824,3 +824,4 @@ setTimeout(function () {
     console.log("Приложение загружено!");
     console.log("----------Работа приложения---------------");
 }, 100);
+
