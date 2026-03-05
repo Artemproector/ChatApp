@@ -66,7 +66,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
 // Функция для получения JSON данных напрямую (для обратной совместимости)
 async function getJsonValue(path = '') {
     try {
-        const response = await fetch('static/memory.json');
+        const response = await fetch('chatapp.pythonanywhere.com/static/memory.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -119,7 +119,7 @@ async function sendMessage(event) {
     }
 
     try {
-        const result = await apiRequest('/api/send_message', 'POST', {
+        const result = await apiRequest('chatapp.pythonanywhere.com/api/send_message', 'POST', {
             chat_id: currentChatId,
             user_id: userID,
             text: messageText
@@ -423,7 +423,7 @@ async function handleCreateChat(event) {
     const chatId = generateChatId();
 
     try {
-        const result = await apiRequest('/create_chat', 'POST', {
+        const result = await apiRequest('chatapp.pythonanywhere.com/create_chat', 'POST', {
             chat_id: chatId,
             chat_name: chatName,
             users: selectedUsers,
@@ -488,7 +488,7 @@ console.log("Загрузка функций завершена");
 // Загрузка чатов пользователя
 async function loadUserChats() {
     try {
-        const result = await apiRequest(`/api/get_chats?user_id=${userID}`);
+        const result = await apiRequest(`chatapp.pythonanywhere.com/api/get_chats?user_id=${userID}`);
 
         if (result.success) {
             displayChats(result.chats);
