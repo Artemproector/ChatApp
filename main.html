@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="static/img/favicon.png" type="image/x-icon">
+    <title>Чаты | ChatApp</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<div class="loader">
+    <img src="static/img/favicon.png" alt="">
+</div>
+
+<body>
+    <div class="container">
+        <div class="chat_list">
+        </div>
+        <div class="chat_area">
+            <div class="chat_header">
+                <svg class="arr" onclick="closechat()" xmlns="http://www.w3.org/2000/svg" height="24px"
+                    viewBox="0 -960 960 960" width="24px" fill="#272727">
+                    <path
+                        d="m313-440 196 196q12 12 11.5 28T508-188q-12 11-28 11.5T452-188L188-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l264-264q11-11 27.5-11t28.5 11q12 12 12 28.5T508-715L313-520h447q17 0 28.5 11.5T800-480q0 17-11.5 28.5T760-440H313Z" />
+                </svg>
+                <div>
+                    <p class="name chatName">Загрузка...</p>
+                    <p class="id chatId">Загрузка...</p>
+                </div>
+            </div>
+            <div class="chat-container">
+            </div>
+            <form class="input-container">
+                <input id="message-input" type="text" name="msg" placeholder="Введите сообщение" autocomplete="off">
+                <input type="hidden" name="chat_id" class="chat_id">
+                <input type="hidden" name="user" class="user">
+                <button id="send-button" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                        fill="#fcc419">
+                        <path
+                            d="M440-608 324-492q-11 11-28 11t-28-11q-11 11-11 28t11-28l184-184q12-12 28-12t28 12l184 184q11 11 11 28t-11 28q-11 11-28 11t-28-11L520-608v328q0 17-11.5 28.5T480-240q-17 0-28.5-11.5T440-280v-328Z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="static/script.js"></script>
+    <script>
+        let user_inp = document.querySelector('.user');
+        var userID = localStorage.getItem('userID');
+
+        async function getJsonValue(path = '') {
+            try {
+                const response = await fetch('static/memory.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (!path) return data;
+                const value = path.split('.').reduce((obj, key) => obj?.[key], data);
+                return value !== undefined ? value : 'error(VNF)';
+            } catch (error) {
+                return 'error(FNF)';
+            }
+        }
+
+        getJsonValue('accounts').then(chats => {
+            let accounts = chats;
+            Object.entries(accounts).forEach(([key, value]) => {
+                if (value.ID == userID) {
+                    user_inp.value = value.Name;
+                }
+            });
+        });
+
+        // Адаптация для мобильных: скрываем клавиатуру при клике вне инпута
+        document.addEventListener('click', function (event) {
+            if (event.target.id !== 'message-input' && event.target.id !== 'send-button') {
+                document.getElementById('message-input')?.blur();
+            }
+        });
+
+        // Автоматический скролл при фокусе на инпуте на мобильных
+        document.getElementById('message-input')?.addEventListener('focus', function () {
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>
