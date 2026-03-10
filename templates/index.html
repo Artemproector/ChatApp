@@ -1,1 +1,27 @@
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="static/images/favicon.png" type="image/x-icon">
+    <title>Вход | ChatApp</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="window">
+        <div class="desc">
+        <h1>ChatApp</h1>
+            <p>Войдите в свой аккаунт или зарегистрируйтесь чтобы начать общение!</p>
+        </div>
+        <form class="form_log" action="#">
+            <input type="text" name="login" id="login" class="login" placeholder="Логин" autocomplete="username">
+            <input type="password" name="pass" id="pass" class="pass" placeholder="Пароль" autocomplete="name">
+            <button type="submit">Войти</button>
+            <a href="#" onclick="createAcc()">Создать аккаунт</a>
+        </form>
+    </div>
+</body>
+<script src="static/js/index.js"></script>
+</html>
