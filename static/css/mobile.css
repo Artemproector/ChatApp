@@ -1,0 +1,39 @@
+@media (max-width: 600px) {
+    body {
+        background: rgb(39, 39, 39);
+        color: #333;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    .container {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .chat_list {
+        width: 100%;
+        border: none;
+    }
+
+    .chat_area {
+        display: none;
+        width: 100%;
+        padding: 0px 0px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .message {
+        max-width: 90%;
+    }
+}
